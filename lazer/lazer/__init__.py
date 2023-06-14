@@ -1,7 +1,9 @@
 import ast
+import json
 import inspect
+import openai
 from icecream import ic
-from typing import Callable
+from typing import Callable, Any
 
 from pytojsonschema.functions import process_function_def
 from pytojsonschema.common import init_schema_map, init_typing_namespace
@@ -64,3 +66,40 @@ class Lazer:
             schemas.append(openai_compliant_schema)
 
         return schemas
+
+
+class LazerConversation:
+    def __init__(self, lazer: Lazer, chatCompletionArgs: dict[str, Any]):
+        self.messages = []
+        self.lazer = lazer
+        self.args = chatCompletionArgs
+
+        assert "messages" not in self.args
+        assert "functions" not in self.args
+        assert "function_call" not in self.args
+
+        self.args["messages"] = self.messages
+        self.args["functions"] = lazer.get_functions()
+        self.args["function_call"] = "auto"
+
+    async def talk(self, content: str):
+        self.messages.append({"role": "user", "content": content})
+
+        while True:
+            response = openai.ChatCompletion.create(**self.args)
+
+            message = response["choices"][0]["message"]  # type: ignore
+            if not message.get("function_call"):
+                return message
+
+            function_name = message["function_call"]["name"]
+            function_args = json.loads(message["function_call"]["arguments"])
+            function_response = self.lazer.dispatch(function_name, function_args)
+
+            self.messages.append(
+                {
+                    "role": "function",
+                    "name": function_name,
+                    "content": function_response,
+                }
+            )
