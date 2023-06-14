@@ -13,6 +13,20 @@ language command interpreter.
 
 To run this `python -m demo.gptbackdoor`
 
+Several functions are exposed to ChatGPT as examples. The list below is the
+list of functions that are exposed to ChatGPT, written by asking ChatGPT
+to read the source code of `lazer/demo/gptbackdoor.py`.
+
+```
+> The source code for your exposed functions are at demo/gptbackdoor.py. What functions are exposed to you?
+< The exposed functions are:
+1. ls: List files in the current directory.
+2. cat: Read the content of a file.
+3. override_file: Override a file with new content.
+4. quit: Quit the program.
+5. calculate: Calculate an expression using the bc command.
+```
+
 ### Example
 
 ```
@@ -26,16 +40,3 @@ The `LazerConversation` class represents a conversation with the `Lazer` instanc
 > Write a README for this code and write that into the README.md file.
 < I have written the README and saved it in the README.md file.
 ```
-
-### Exposed APIs
-
-```
-> The source code for your exposed functions are at demo/gptbackdoor.py. What functions are exposed to you?
-< The exposed functions are:
-1. ls: List files in the current directory.
-2. cat: Read the content of a file.
-3. override_file: Override a file with new content.
-4. quit: Quit the program.
-5. calculate: Calculate an expression using the bc command.
-```
-
