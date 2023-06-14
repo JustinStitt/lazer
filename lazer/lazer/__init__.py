@@ -15,12 +15,22 @@ _functions = []
 _previous_get_functions_result = None
 
 
+def dispatch(function_name: str, function_args: dict):
+    for func in _functions:  # FIX: slow linear search, use set
+        name = func.__name__
+        if function_name == name:
+            return func(**function_args)
+
+    return "can't find that function lol xd"
+
+
 def get_functions() -> list[dict]:
     global _functions, _previous_get_functions_result
     if _previous_get_functions_result:
         return _previous_get_functions_result
     result = _functions_to_schemas(_functions)
     _previous_get_functions_result = result
+    ic(_functions)
     return result
 
 
@@ -59,7 +69,10 @@ def _functions_to_schemas(functions: list[Callable]) -> list[dict]:
             "$schema"
         ]  # unsued for OpenAI's purposes, probably doesn't hurt to leave it though
 
+        del base_schema["additionalProperties"]
+
         openai_compliant_schema = _fill_in_schema(name, doc, base_schema)
         schemas.append(openai_compliant_schema)
+        ic(openai_compliant_schema)
 
     return schemas
