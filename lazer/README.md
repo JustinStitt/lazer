@@ -10,4 +10,4 @@ A Python package that enables easier setup for function-enabled GPT models like 
 
 ### Usage
 
-Go check `lazer/user/app.py` for a dummy app
+Go check `lazer/demo/app.py` for a dummy app
