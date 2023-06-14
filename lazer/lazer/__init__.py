@@ -82,10 +82,10 @@ class LazerConversation:
         assert "function_call" not in self.args
 
         self.args["messages"] = self.messages
-        self.args["functions"] = lazer.get_functions()
         self.args["function_call"] = "auto"
 
     async def talk(self, content: str) -> str:
+        self.args["functions"] = self.lazer.get_functions()
         self.messages.append({"role": "user", "content": content})
 
         while True:
