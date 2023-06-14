@@ -4,9 +4,12 @@ import inspect
 import openai
 from icecream import ic
 from typing import Callable, Any
+from dotenv import load_dotenv
 
 from pytojsonschema.functions import process_function_def
 from pytojsonschema.common import init_schema_map, init_typing_namespace
+
+load_dotenv()
 
 
 class Lazer:
@@ -82,7 +85,7 @@ class LazerConversation:
         self.args["functions"] = lazer.get_functions()
         self.args["function_call"] = "auto"
 
-    async def talk(self, content: str):
+    async def talk(self, content: str) -> str:
         self.messages.append({"role": "user", "content": content})
 
         while True:
@@ -90,7 +93,7 @@ class LazerConversation:
 
             message = response["choices"][0]["message"]  # type: ignore
             if not message.get("function_call"):
-                return message
+                return message["content"]
 
             function_name = message["function_call"]["name"]
             function_args = json.loads(message["function_call"]["arguments"])

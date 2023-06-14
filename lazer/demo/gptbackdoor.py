@@ -29,7 +29,7 @@ async def main():
     while True:
         content = input("> ")
         message = await convo.talk(content)
-        print("< " + message["content"], flush=True)
+        print("< " + message, flush=True)
         print()
 
 
