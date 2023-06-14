@@ -11,3 +11,5 @@ A Python package that enables easier setup for function-enabled GPT models like 
 ### Usage
 
 Go check `lazer/demo/app.py` for a dummy app
+
+To run this `python -m demo.app`
