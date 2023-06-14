@@ -12,14 +12,12 @@ class Lazer:
         self._schema_map = init_schema_map()
         self._type_namespace = init_typing_namespace()
         self._functions = []
+        self._name_to_func = {}
         self._previous_get_functions_result = None
 
     def dispatch(self, function_name: str, function_args: dict):
-        for func in self._functions:  # FIX: slow linear search, use set
-            name = func.__name__
-            if function_name == name:
-                return func(**function_args)
-        return "can't find that function lol xd"
+        f = self._name_to_func.get(function_name, lambda: "Couldn't find that function")
+        return f(**function_args)
 
     def get_functions(self) -> list[dict]:
         if self._previous_get_functions_result:
@@ -30,6 +28,7 @@ class Lazer:
 
     def use(self, func):
         self._functions.append(func)
+        self._name_to_func[func.__name__] = func
 
         def wrapper(*args, **kwargs):
             return func(*args, **kwargs)
