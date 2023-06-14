@@ -2,6 +2,8 @@
 
 Lazer is a Python library that provides a convenient way to expose Python functions as schemas for OpenAI chat models.
 
+For those not in the know: [OpenAI - Function Calling](https://platform.openai.com/docs/guides/gpt/function-calling)
+
 ### What it Does
 
 Allows you to more easily inform GPT about functions in your code 😊
