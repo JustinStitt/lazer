@@ -37,10 +37,7 @@ print(response)
 
 ### Demo
 
-Go check `lazer/demo/app.py` for a dummy app or a `lazer/demo/gptbackdoor.py`
-
-To run this `python -m demo.app`
-
+Go to [demo/](demo/) for some demo code.
 
 #### Authors:
 
