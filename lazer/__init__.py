@@ -1,16 +1,19 @@
 import ast
-import json
 import inspect
-import openai
+import json
+import os
 import sys
-from icecream import ic
-from typing import Callable, Any
-from dotenv import load_dotenv
+from typing import Any, Callable
 
-from pytojsonschema.functions import process_function_def
+from dotenv import load_dotenv
+from icecream import ic
+import openai
 from pytojsonschema.common import init_schema_map, init_typing_namespace
+from pytojsonschema.functions import process_function_def
 
 load_dotenv()
+
+openai.api_key = os.getenv("OPENAI_API_KEY")
 
 
 class Lazer:
