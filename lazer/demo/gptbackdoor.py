@@ -43,6 +43,13 @@ def quit() -> str:
 
 
 @backdoor.use
+def pip_install(package_name: str) -> str:
+    """Install a pip package from the users provided package name"""
+    subprocess.run(["pip", "install", package_name.strip()])
+    return "Command completed"
+
+
+@backdoor.use
 def calculate(expression: str) -> str:
     """Calculate expression (using the bc command)"""
     return subprocess.check_output(
@@ -53,7 +60,7 @@ def calculate(expression: str) -> str:
 def main():
     while True:
         content = input("> ")
-        message = convo.talk(content)
+        message = convo.talk(content, debug=True)
         print("< " + message, flush=True)
         print()
 

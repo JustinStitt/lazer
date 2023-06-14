@@ -2,6 +2,7 @@ import ast
 import json
 import inspect
 import openai
+import sys
 from icecream import ic
 from typing import Callable, Any
 from dotenv import load_dotenv
@@ -84,7 +85,7 @@ class LazerConversation:
         self.args["messages"] = self.messages
         self.args["function_call"] = "auto"
 
-    def talk(self, content: str) -> str:
+    def talk(self, content: str, debug=False) -> str:
         self.args["functions"] = self.lazer.get_functions()
         self.messages.append({"role": "user", "content": content})
 
@@ -97,6 +98,11 @@ class LazerConversation:
 
             function_name = message["function_call"]["name"]
             function_args = json.loads(message["function_call"]["arguments"])
+            if debug:
+                print(
+                    f"🔧 Running Function : {function_name} with args {function_args}",
+                    file=sys.stderr,
+                )
             function_response = self.lazer.dispatch(function_name, function_args)
 
             self.messages.append(
