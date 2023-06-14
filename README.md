@@ -39,11 +39,20 @@ print(response)
 # ... 117 ...
 ```
 
-### Demo
+> **Note** You do not have to use the LazerConversation GPT frontend, you can simply use
+the Lazer functions `.use` (decorator) and `.get_functions()` as well as
+`.dispatch()` to build your own GPT frontend utilizing Lazer.
+
+> **Note** If you are using the LazerConversation frontend be sure to set an
+`OPENAI_API_KEY` in a `.env` file somewhere in your directory.
+
+
+## Demo
 
 Go to [demo/](demo/) for some demo code.
 
-#### Authors:
+
+## Authors:
 
 * @JustinStitt
 * @diamondburned
