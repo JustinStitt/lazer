@@ -6,15 +6,18 @@ import openai
 import os
 import json
 from icecream import ic
-from lazer import lazer, get_functions, dispatch
+
+from lazer import Lazer
 from dotenv import load_dotenv
+
+lazer = Lazer()
 
 load_dotenv()
 
 openai.api_key = os.getenv("OPENAI_API_KEY")
 
 
-@lazer
+@lazer.use
 def qux(num1: int, name: str) -> str:
     """
     Takes a number from the user as well as a name and computes the qux of them both.
@@ -26,7 +29,7 @@ def qux(num1: int, name: str) -> str:
     return str(num1 + len(name))
 
 
-@lazer
+@lazer.use
 def getSmellinessOfNumber(num: int) -> str:
     """
     Takes a number from the user and computes the smelliness of it.
@@ -55,7 +58,7 @@ def get_gpt_response(
     response = openai.ChatCompletion.create(
         model="gpt-3.5-turbo-0613",
         messages=messages,
-        functions=get_functions(),
+        functions=lazer.get_functions(),
         function_call="auto",
     )
     response_message = response["choices"][0]["message"]  # type: ignore
@@ -82,7 +85,7 @@ def main():
 
         function_response = "No response from function call"
 
-        function_response = dispatch(function_name, function_args)
+        function_response = lazer.dispatch(function_name, function_args)
 
         function_based_response = get_gpt_response(
             function_response, "function", function_name
