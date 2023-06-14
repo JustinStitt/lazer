@@ -1,12 +1,15 @@
-import asyncio
 import openai
+import sys
 import os
+import requests
+import subprocess
 from lazer import Lazer, LazerConversation
 
 openai.api_key = os.getenv("OPENAI_API_KEY")
 
 
 backdoor = Lazer()
+convo = LazerConversation(backdoor, {"model": "gpt-3.5-turbo-0613"})
 
 
 @backdoor.use
@@ -23,17 +26,37 @@ def cat(filename: str) -> str:
         return f.read()
 
 
-async def main():
-    convo = LazerConversation(backdoor, {"model": "gpt-3.5-turbo-0613"})
+@backdoor.use
+def override_file(filename: str, content: str) -> str:
+    """
+    Override a file with the content provided.
+    """
+    with open(filename, "w") as f:
+        f.write(content)
+    return cat(filename)
 
+
+@backdoor.use
+def quit() -> str:
+    """Quit the program"""
+    raise SystemExit
+
+
+@backdoor.use
+def calculate(expression: str) -> str:
+    """Calculate expression (using the bc command)"""
+    return subprocess.check_output(
+        ["bc", "-l"], input=expression.strip() + "\n", text=True
+    )
+
+
+def main():
     while True:
         content = input("> ")
-        message = await convo.talk(content)
+        message = convo.talk(content)
         print("< " + message, flush=True)
         print()
 
 
 if __name__ == "__main__":
-    loop = asyncio.get_event_loop()
-    loop.run_until_complete(main())
-    loop.close()
+    main()
