@@ -4,7 +4,9 @@ Lazer is a Python library that provides a convenient way to expose Python functi
 
 ### What it Does
 
-Allows you to more easily inform GPT about your
+Allows you to more easily inform GPT about functions in your code 😊
+
+> **Warning** don't RCE yourself lol
 
 ## Installation
 
