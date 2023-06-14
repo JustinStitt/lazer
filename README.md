@@ -36,7 +36,7 @@ def qux(num: int, name: str) -> str:
 conversation = LazerConversation(lazer, {"model": "gpt-3.5-turbo-0613"})
 response = conversation.talk("What is the qux of 3 and steven")
 print(response)
-# ... 117 ...
+# ... 81 ...
 ```
 
 > **Note** You do not have to use the LazerConversation GPT frontend, you can simply use
