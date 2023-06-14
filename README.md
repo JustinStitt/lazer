@@ -33,7 +33,7 @@ def qux(num: int, name: str) -> str:
     """Retrieve a number and a name from the user and compute the qux of it"""
     return str(num + len(name) * 13)
 
-conversation = LazerConversation(backdoor, {"model": "gpt-3.5-turbo-0613"})
+conversation = LazerConversation(lazer, {"model": "gpt-3.5-turbo-0613"})
 response = conversation.talk("What is the qux of 3 and steven")
 print(response)
 # ... 117 ...
