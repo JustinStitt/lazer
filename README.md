@@ -34,7 +34,7 @@ def qux(num: int, name: str) -> str:
     return str(num + len(name) * 13)
 
 conversation = LazerConversation(lazer)
-response = await conversation.talk("What is the qux of 3 and steven")
+response = conversation.talk("What is the qux of 3 and steven")
 print(response)
 # ... 117 ...
 ```
