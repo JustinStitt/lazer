@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "lazer"
-version = "0.1.0"
+version = "0.1.1"
 description = ""
 authors = ["Justin Stitt <jstitt007@gmail.com>"]
 readme = "README.md"
