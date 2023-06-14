@@ -30,7 +30,6 @@ class Lazer:
 
     def use(self, func):
         self._functions.append(func)
-        ic(func)
 
         def wrapper(*args, **kwargs):
             return func(*args, **kwargs)
